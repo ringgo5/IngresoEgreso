@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit{
 
     this.registroForm = this.fb.group({
       nombre: ['',Validators.required],
-      correo: ['',Validators.email], // no se porque si pongo Validators.required,validators.email me da error
+      correo: ['',Validators.email,Validators.required], 
       password: ['',Validators.required]
     });
       

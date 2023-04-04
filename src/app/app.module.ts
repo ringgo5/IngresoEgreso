@@ -56,7 +56,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     
   ],
   providers: [
-    { provide: AUTH_SETTINGS, useValue: { appVerificationDisabledForTesting: true } },
+    { provide: AUTH_SETTINGS, useValue: { appVerificationDisabledForTesting: true } }, //estas 3 lineas las puse buscando la solcuion de los primeros errores cuando hacia register en internet
     { provide: PERSISTENCE, useValue: 'session' },
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     

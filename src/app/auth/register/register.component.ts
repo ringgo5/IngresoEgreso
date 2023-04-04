@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -12,9 +13,10 @@ import firebase from 'firebase/compat/app';
 })
 export class RegisterComponent implements OnInit {
 
-  registroForm!: FormGroup;
+  registroForm: FormGroup;
   constructor(private fb: FormBuilder,
-    private authService: AuthService) { }
+              private authService: AuthService,
+              private router:Router) { } //esta linea activo la navegacion por rutas,luego la pongo abajo
 
 
   ngOnInit(): void {
@@ -33,10 +35,11 @@ export class RegisterComponent implements OnInit {
     // console.log(this.registroForm.value)
     if (this.registroForm.invalid) { return; }
     const { nombre, correo, password } = this.registroForm.value;
-    console.log(this.registroForm.value)
+  //  console.log(this.registroForm.value)
     this.authService.crearUsuario(nombre, correo, password)
       .then(credenciales => {
         console.log(credenciales);
+        this.router.navigate(['/']);//con esto navegamos a la raíz si registramos a un usuario correcto
       })
       .catch(err => console.error(err));
   }

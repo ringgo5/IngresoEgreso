@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Route, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -15,8 +16,8 @@ export class RegisterComponent implements OnInit {
 
   registroForm: FormGroup;
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private router:Router) { } //esta linea activo la navegacion por rutas,luego la pongo abajo
+            private authService: AuthService,
+            private router:Router) { } //esta linea activo la navegacion por rutas,luego la pongo abajo
 
 
   ngOnInit(): void {
@@ -29,6 +30,13 @@ export class RegisterComponent implements OnInit {
 
   }
   crearUsuario() {
+    Swal.fire({
+      title: 'Auto close alert!',
+      didOpen: ()=>{
+        Swal.showLoading();
+       
+      }
+    })
 
     // console.log(this.registroForm),
     // console.log(this.registroForm.valid),
@@ -39,9 +47,17 @@ export class RegisterComponent implements OnInit {
     this.authService.crearUsuario(nombre, correo, password)
       .then(credenciales => {
         console.log(credenciales);
+        Swal.close(); //cerramos el loading ojo con el ()
         this.router.navigate(['/']);//con esto navegamos a la raíz si registramos a un usuario correcto
       })
-      .catch(err => console.error(err));
+      .catch(err => Swal.fire({
+        title: 'Sweet!',
+        text: err.message,
+        imageUrl: 'https://unsplash.it/400/200',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+      }));
   }
 
 }

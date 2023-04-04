@@ -6,7 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 //formularioReactivo:
 
 import {ReactiveFormsModule} from '@angular/forms';
+//angular fire:
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
+//import {AngularFireModule} from '@angular/fire';
+import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -18,6 +24,9 @@ import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -30,16 +39,31 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     DetalleComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent,
+    SidebarComponent
+    
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    AngularFireAuthModule
+    
+    
+    
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: AUTH_SETTINGS, useValue: { appVerificationDisabledForTesting: true } },
+    { provide: PERSISTENCE, useValue: 'session' },
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    
+    
+  ],
+  
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

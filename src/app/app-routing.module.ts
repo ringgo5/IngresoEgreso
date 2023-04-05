@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { dashboardRoutes } from './dashboard/dashboard.routes';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
@@ -12,7 +13,10 @@ const routes: Routes = [
     {
       path: '',
       component: DashboardComponent,
-      children: dashboardRoutes
+      children: dashboardRoutes,
+      canActivate: [ //aqui recibe todas las reglas que queramos.Estamos en creacion de guard
+          AuthGuard
+      ]
       
     }, //esta para el dashboard,la necesitamos porque es la que carga una vez te registras/inicias sesion
     {path: '**', redirectTo:''} //esto indica que cualquier otra ruta ira al dashboard tb

@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { AuthService } from './services/auth.service';
 //import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -13,9 +14,9 @@ export class AppComponent {
   firestore: Firestore = inject(Firestore);
   items$: any;
 
-  constructor() {
-    const aCollection = collection(this.firestore, 'items')
-    this.items$ = collectionData(aCollection);
+  constructor(private AuthService : AuthService) {
+    this.AuthService.initAuthListener()
+    
   }
 }
 

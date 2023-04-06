@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 //modulos:
 import { AppRoutingModule } from './app-routing.module';
@@ -9,10 +9,16 @@ import {ReactiveFormsModule} from '@angular/forms';
 //angular fire:
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 //import {AngularFireModule} from '@angular/fire';
 import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
+
+//ngrx:
+
+import{StoreModule} from '@ngrx/store'
+import{appReducers} from './app.reducer'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -27,6 +33,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+
+
 
 @NgModule({
   declarations: [
@@ -50,7 +58,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    AngularFireModule.initializeApp(environment.firebase)
     
     
     

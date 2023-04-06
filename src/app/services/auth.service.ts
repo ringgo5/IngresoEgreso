@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import 'firebase/firestore';
 import { Usuario } from 'models/usuario.model';
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore'; //ojo con las rutas
+import { Store } from '@ngrx/store';
+import * as actions from '../auth/auth.actions';
 //import {firebase} from 'firebase/firestore/lite';
 
 
@@ -12,11 +14,14 @@ import { AngularFirestore } from '@angular/fire/compat/firestore'; //ojo con las
   providedIn: 'root'
 })
 export class AuthService {
+
+  userSuscription: Subscription;
   
   
 
   constructor(public auth:AngularFireAuth,
               private firestore: AngularFirestore,
+              private store: Store
               //private firebase:firebase
               /*private firestore: AngularFirestore*/) { }
 /*  initAuthListener(){
@@ -67,11 +72,26 @@ export class AuthService {
 
   initAuthListener(){
 
-    this.auth.authState.subscribe(fuser=>{
-      console.log(fuser?.uid) //con el ? le digo que si existe,que lo ponga,si no no
-      console.log(fuser)
-      console.log(fuser?.email)
+    this.auth.authState.subscribe(fuser=>{ //esta suscripcion NUNCA DEBEMOS SALIR ya que es un servicio y solo se lanza 1 vez
+      //console.log(fuser?.uid) //con el ? le digo que si existe,que lo ponga,si no no
       //console.log(fuser)
+      //console.log(fuser?.email)
+      //console.log(fuser)
+      if(fuser){
+        //si existe..
+      this.userSuscription=  this.firestore.doc(`${ fuser.uid }/usuario`).valueChanges() ///hasta aqui es el observable,debemos subscribirnos
+        .subscribe((fireStoreUser:any)=>{
+          console.log(fireStoreUser)
+          const user= Usuario.fromFirebase(fireStoreUser); //creamos nuestra copia
+          this.store.dispatch(actions.setUser({user}))//ahora con nuestra copia lo añadimos al store y le decimos que nuestro user es el que hemos creado
+        })
+      }else{
+        //si no existe
+        this.userSuscription.unsubscribe();//finaliza suscripcion
+        this.store.dispatch(actions.unSetuUser()); //
+      }
+      
+      
       
     })
   }

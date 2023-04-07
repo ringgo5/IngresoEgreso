@@ -84,15 +84,15 @@ export class AuthService {
           console.log(fireStoreUser)
           const user= Usuario.fromFirebase(fireStoreUser); //creamos nuestra copia
           this.store.dispatch(actions.setUser({user}))//ahora con nuestra copia lo añadimos al store y le decimos que nuestro user es el que hemos creado
+         // console.log(this.store)
         })
       }else{
         //si no existe
         this.userSuscription.unsubscribe();//finaliza suscripcion
         this.store.dispatch(actions.unSetuUser()); //
+        //console.log(this.store)
+        
       }
-      
-      
-      
     })
   }
 

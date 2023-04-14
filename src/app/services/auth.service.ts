@@ -16,6 +16,11 @@ import * as actions from '../auth/auth.actions';
 export class AuthService {
 
   userSuscription: Subscription;
+ 
+  private _usuario: Usuario;
+  get user(){
+    return {...this._usuario}
+  }
   
   
 
@@ -83,11 +88,17 @@ export class AuthService {
         .subscribe((fireStoreUser:any)=>{
           console.log(fireStoreUser)
           const user= Usuario.fromFirebase(fireStoreUser); //creamos nuestra copia
+
+
+          this._usuario=user; //importane,si no luego no lo añade
+
+
           this.store.dispatch(actions.setUser({user}))//ahora con nuestra copia lo añadimos al store y le decimos que nuestro user es el que hemos creado
          // console.log(this.store)
         })
       }else{
         //si no existe
+        this._usuario=null;
         this.userSuscription.unsubscribe();//finaliza suscripcion
         this.store.dispatch(actions.unSetuUser()); //
         //console.log(this.store)

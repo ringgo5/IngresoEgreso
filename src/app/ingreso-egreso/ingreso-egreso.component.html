@@ -44,11 +44,20 @@
             <hr>
             <button type="submit" class="btn btn-success mr-2"
             [disabled]="ingresoForm.invalid"
+            *ngIf="!loading"
                      
             > <!--[disabled]="ingresoForm.invalid"-->
               <i class="fa fa-save"
               ></i>
-              Agregar
+              guardar
+            </button>
+            <button type="submit" class="btn btn-success mr-2"
+            [disabled]="ingresoForm.invalid"
+            *ngIf="loading"
+                     
+            > <!--[disabled]="ingresoForm.invalid"-->
+            <i class="fa fa-spin fa-sync"></i>
+              loading..
             </button>
 
             <!-- 

@@ -65,7 +65,7 @@ export class IngresoEgresoService {
     let uid = this.Authservice.user.uid //para borrar tuve que primero localizar comosacar el uid, y vi que era mediante uidItem y luego
     //con punto podia acceder al uid. Ya pudiendo acceder lo meto delante del delete y listo!
     //esto me llevo varios dias,ya que me salía vacio todo el rato, y era que no estaba accediendo bien
-    console.log(uidItem.uid)
+   // console.log(uidItem.uid)
 
     return this.angularFireStore.doc(`${uid}/ingresos-egresos/items/${uidItem.uid}`).delete()
     

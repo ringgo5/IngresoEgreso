@@ -20,6 +20,11 @@ import{StoreModule} from '@ngrx/store'
 import{appReducers} from './app.reducer'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+
+//chart:
+
+import { NgChartsModule } from 'ng2-charts';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -33,6 +38,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { OrdenIngresoPipe } from './pipes/orden-ingreso.pipe';
 
 
 
@@ -47,7 +53,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     DetalleComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrdenIngresoPipe
     
     
   ],
@@ -61,7 +68,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     AngularFireAuthModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    NgChartsModule
     
     
     

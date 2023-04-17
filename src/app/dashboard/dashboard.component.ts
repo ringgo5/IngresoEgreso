@@ -3,6 +3,7 @@ import { Subscription, filter } from 'rxjs';
 import { AppState } from '../app.reducer';
 import { IngresoEgresoService } from '../services/ingreso-egreso.service';
 import { Store } from '@ngrx/store';
+import * as IngresoActions from '../ingreso-egreso/ingreso-egreso.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +13,8 @@ import { Store } from '@ngrx/store';
 export class DashboardComponent implements OnInit,OnDestroy {
 
   userSub: Subscription
+  itemsSub: Subscription
+ 
 
   constructor(private store:Store<AppState>,
               private ingresoEgresoService: IngresoEgresoService){}
@@ -22,6 +25,8 @@ export class DashboardComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.userSub.unsubscribe() //ya que el usuario puede cerrar sesion,y si lo hace, necesitamos quitarnos de la suscripcion.Por eso
       //creamos la variable userSub, para suscribir todo lo de abajo y poder cerrarla aquí
+    this.itemsSub.unsubscribe()
+      
   }
   ngOnInit(){
     
@@ -32,7 +37,12 @@ export class DashboardComponent implements OnInit,OnDestroy {
     )
     .subscribe(({user})=>{
       console.log(user);
-      this.ingresoEgresoService.initIngresosEgresosListener(user.uid)
+      this.itemsSub=this.ingresoEgresoService.initIngresosEgresosListener(user.uid) //con esto obtenemos toda la lista de items,nos sucribimos y hacemos el store dispatch
+      //hay que suscribirse en un obersvable para que se dispare
+      .subscribe(ingresosEgresosFB=>{
+        console.log(ingresosEgresosFB)
+        this.store.dispatch(IngresoActions.setItems({items:ingresosEgresosFB}))
+      })
     })
     
   }

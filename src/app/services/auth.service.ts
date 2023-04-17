@@ -6,6 +6,7 @@ import { Subscription, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore'; //ojo con las rutas
 import { Store } from '@ngrx/store';
 import * as actions from '../auth/auth.actions';
+import { UnSetItems } from '../ingreso-egreso/ingreso-egreso.actions';
 //import {firebase} from 'firebase/firestore/lite';
 
 
@@ -99,8 +100,11 @@ export class AuthService {
       }else{
         //si no existe
         this._usuario=null;
-        this.userSuscription.unsubscribe();//finaliza suscripcion
+        this.userSuscription.unsubscribe();//finaliza suscripcion}
+        
         this.store.dispatch(actions.unSetuUser()); //
+        this.store.dispatch(UnSetItems())
+      
         //console.log(this.store)
         
       }

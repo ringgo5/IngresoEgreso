@@ -34,12 +34,14 @@ export class IngresoEgresoComponent implements OnInit,OnDestroy{
 
 
   ngOnInit() {
-    this.loadingSubs=this.store.select('ui').subscribe(ui=>{this.loading=ui.isloading})
+    this.loadingSubs=this.store.select('ui')
+    .subscribe(ui=>{this.loading=ui.isloading})
 
     this.ingresoForm=this.fb.group({
        descripcion:['',Validators.required],
        numero:['',Validators.required],
-       //tipo:['',Validators.required]
+       //tipo:['',Validators.required],
+
     });
     
   }

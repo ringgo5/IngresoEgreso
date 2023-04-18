@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IngresoEgreso } from 'models/ingreso-modelo.model';
 import { Subscription } from 'rxjs';
-import { AppState } from 'src/app/app.reducer';
+//import { AppState } from 'src/app/app.reducer';
 import {IngresoEgresoService} from '../../services/ingreso-egreso.service'
 import Swal from 'sweetalert2';
 import { Usuario } from 'models/usuario.model';
@@ -22,13 +22,13 @@ export class DetalleComponent implements OnInit,OnDestroy {
     usuario:Usuario;
   
 
-  constructor(private store:Store<AppState>,
+  constructor(private store:Store<AppStateWithIngreso>,
               private ingresoEgresoService:IngresoEgresoService){}
  
 
 
   ngOnInit(): void {
-    this.ingresoEgresoSuscripcion=this.store.select('ingresoEgreso').subscribe(/*ingresos*/ ({items})=>{
+    this.ingresoEgresoSuscripcion=this.store.select('ingresosEgresos').subscribe(/*ingresos*/ ({items})=>{
      // console.log(items)
       this.ingresosEgresos=items
      

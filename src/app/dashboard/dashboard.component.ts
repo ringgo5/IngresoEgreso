@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
-import { AppState } from '../app.reducer';
+//import { AppState } from '../app.reducer';
 import { IngresoEgresoService } from '../services/ingreso-egreso.service';
 import { Store } from '@ngrx/store';
 import * as IngresoActions from '../ingreso-egreso/ingreso-egreso.actions';
+import { AppStateWithIngreso } from '../ingreso-egreso/ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
   itemsSub: Subscription
  
 
-  constructor(private store:Store<AppState>,
+  constructor(private store:Store<AppStateWithIngreso>,
               private ingresoEgresoService: IngresoEgresoService){}
 
 

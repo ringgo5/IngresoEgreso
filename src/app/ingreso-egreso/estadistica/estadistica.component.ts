@@ -33,7 +33,7 @@ export class EstadisticaComponent implements OnInit,OnDestroy{
   public doughnutChartType: ChartType = 'doughnut';
   totalingresos: number;
 
-  constructor(private store: Store<AppState>){
+  constructor(private store: Store<AppStateWithIngreso>){
 
     
   }
@@ -41,7 +41,7 @@ export class EstadisticaComponent implements OnInit,OnDestroy{
   
   ngOnInit(): void {
 
-    this.store?.select('ingresoEgreso')
+    this.store?.select('ingresosEgresos')
     .subscribe(({items})=>{
       this.generarEstadistica(items)
     })

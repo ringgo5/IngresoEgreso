@@ -7,7 +7,7 @@ export interface State {
     items:IngresoEgreso[] 
 }
 export interface AppStateWithIngreso extends AppState {
-    IngresoEgreso: State;
+    ingresosEgresos: State;
 }
 
 export const initialState: State = {

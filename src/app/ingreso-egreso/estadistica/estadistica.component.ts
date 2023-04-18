@@ -7,6 +7,7 @@ import * as actions from '../../shared/ui.actions';
 import { ChartData, ChartEvent, ChartType } from 'chart.js';
 
 import { AppState } from 'src/app/app.reducer';
+import { AppStateWithIngreso } from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-estadistica',
@@ -40,7 +41,7 @@ export class EstadisticaComponent implements OnInit,OnDestroy{
   
   ngOnInit(): void {
 
-    this.store.select('ingresoEgreso')
+    this.store?.select('ingresoEgreso')
     .subscribe(({items})=>{
       this.generarEstadistica(items)
     })

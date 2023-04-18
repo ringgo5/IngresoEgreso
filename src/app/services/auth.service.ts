@@ -100,7 +100,7 @@ export class AuthService {
       }else{
         //si no existe
         this._usuario=null;
-        this.userSuscription.unsubscribe();//finaliza suscripcion}
+        this.userSuscription?.unsubscribe();//finaliza suscripcion} Pongo el ? porque me daba error de que no puede leer algo vacío
         
         this.store.dispatch(actions.unSetuUser()); //
         this.store.dispatch(UnSetItems())

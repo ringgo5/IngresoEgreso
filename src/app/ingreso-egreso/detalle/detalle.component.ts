@@ -6,6 +6,7 @@ import { AppState } from 'src/app/app.reducer';
 import {IngresoEgresoService} from '../../services/ingreso-egreso.service'
 import Swal from 'sweetalert2';
 import { Usuario } from 'models/usuario.model';
+import { AppStateWithIngreso } from '../ingreso-egreso.reducer';
 //import {OrdenIngresoPipe} from '../../pipes/orden-ingreso.pipe';
  
 @Component({
@@ -40,7 +41,7 @@ export class DetalleComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(): void {
     
-    this.ingresoEgresoSuscripcion.unsubscribe()
+    this.ingresoEgresoSuscripcion?.unsubscribe()
    
   }
 

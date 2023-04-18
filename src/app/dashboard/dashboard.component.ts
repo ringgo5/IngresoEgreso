@@ -23,9 +23,9 @@ export class DashboardComponent implements OnInit,OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe() //ya que el usuario puede cerrar sesion,y si lo hace, necesitamos quitarnos de la suscripcion.Por eso
+    this.userSub?.unsubscribe() //ya que el usuario puede cerrar sesion,y si lo hace, necesitamos quitarnos de la suscripcion.Por eso
       //creamos la variable userSub, para suscribir todo lo de abajo y poder cerrarla aquí
-    this.itemsSub.unsubscribe()
+    this.itemsSub?.unsubscribe()
       
   }
   ngOnInit(){
@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
       this.itemsSub=this.ingresoEgresoService.initIngresosEgresosListener(user.uid) //con esto obtenemos toda la lista de items,nos sucribimos y hacemos el store dispatch
       //hay que suscribirse en un obersvable para que se dispare
       .subscribe(ingresosEgresosFB=>{
-        console.log(ingresosEgresosFB)
+       // console.log(ingresosEgresosFB)
         this.store.dispatch(IngresoActions.setItems({items:ingresosEgresosFB}))
       })
     })
